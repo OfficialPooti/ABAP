@@ -31,7 +31,7 @@ CLASS zbabakd_01 IMPLEMENTATION.
 
   out->write( variable2 - variable3 ).
 
-  DATA(string) = 'Ghayss'.
+  DATA(string) = 'Ghays Alnema'.
 
   CASE string.
     WHEN 'Ghays'.
@@ -39,6 +39,22 @@ CLASS zbabakd_01 IMPLEMENTATION.
     WHEN OTHERS.
         out->write( 'Ghays ist von Israel.' ).
   ENDCASE.
+
+  DATA flight TYPE /dmo/flight.
+DATA flights TYPE /dmo/t_flight.
+
+flights = VALUE #(
+  ( carrier_id = 'LH' connection_id = '0400' flight_date = '20231013' )
+  ( carrier_id = 'LH' connection_id = '0401' flight_date = '20230928' ) ).
+
+" Read single entry
+flight = flights[ 1 ].
+flight = flights[ carrier_id = 'LH' connection_id = '0401' flight_date = '20230928' ].
+
+" Read multiple entries
+LOOP AT flights INTO flight WHERE flight_date >= '20230101'.
+  out->write( flight-carrier_id ).
+ENDLOOP.
 
 
   ENDMETHOD.
